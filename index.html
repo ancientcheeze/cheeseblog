@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Curd & Crumb — A Cheese Blog</title>
+  <!-- Retro pixel font + modern fallback -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* ---------------------------------------------
+       Retro Cheese Blog — Single-file template
+       - Retro / 80s neon + pixel vibes
+       - Editable variables under :root
+    ----------------------------------------------*/
+    :root{
+      --bg:#0b0810; /* deep space */
+      --card:#0f1724; /* card background */
+      --accent:#ff6b6b; /* neon coral */
+      --accent-2:#66fcf1; /* neon cyan */
+      --muted:#9aa6b2;
+      --glass: rgba(255,255,255,0.04);
+      --max-width:1100px;
+    }
+
+    /* Page reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Press Start 2P", sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(102,252,241,0.06), transparent 6%),
+                  linear-gradient(180deg, rgba(255,255,255,0.02), transparent 20%),
+                  var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:48px 20px;
+      display:flex;justify-content:center;
+    }
+
+    /* subtle grid background for retro CRT feel */
+    body::before{
+      content:"";position:fixed;inset:0;pointer-events:none;opacity:0.06;
+      background-image:repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 26px),
+                        repeating-linear-gradient(90deg, rgba(255,255,255,0.01) 0 1px, transparent 1px 26px);
+      z-index:0;mix-blend-mode:overlay;
+    }
+
+    .wrap{width:100%;max-width:var(--max-width);position:relative;z-index:1}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;
+    }
+
+    .brand{
+      display:flex;gap:14px;align-items:center
+    }
+    .logo{
+      width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow:0 6px 18px rgba(102,252,241,0.08), 0 0 18px rgba(255,107,107,0.08) inset;
+      display:grid;place-items:center;font-family:'Press Start 2P',monospace;color:#071022;font-weight:700;font-size:10px;
+    }
+    h1{font-family:'Press Start 2P',monospace;font-size:18px;letter-spacing:1px}
+    p.lead{color:var(--muted);font-size:13px;margin-top:6px}
+
+    nav{
+      display:flex;gap:12px;align-items:center
+    }
+    nav a{font-size:13px;padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--muted);background:transparent}
+    nav a:hover{color:var(--accent);text-shadow:0 0 10px rgba(255,107,107,0.12)}
+
+    main{display:grid;grid-template-columns:1fr 320px;gap:28px}
+
+    /* Feature hero */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+      margin-bottom:18px;overflow:hidden
+    }
+    .hero-inner{display:flex;gap:20px;align-items:center}
+    .hero-image{min-width:160px;height:110px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:700}
+    .hero h2{font-family:'Press Start 2P',monospace;font-size:14px;margin-bottom:6px}
+    .hero p{color:var(--muted);font-size:13px}
+
+    /* Posts list */
+    .posts{display:grid;gap:12px}
+    .post{display:flex;gap:14px;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.03)}
+    .thumb{width:96px;height:72px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:700;font-family:'Press Start 2P',monospace}
+    .meta{flex:1}
+    .title{font-weight:700;margin-bottom:6px}
+    .excerpt{color:var(--muted);font-size:13px}
+    .tags{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:11px;padding:6px 8px;border-radius:8px;background:var(--glass);color:var(--muted)}
+
+    /* Sidebar */
+    aside{position:relative}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(2,6,23,0.5)}
+    .subscribe input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;margin-top:8px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071022}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* Footer */
+    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Responsive */
+    @media (max-width:880px){
+      main{grid-template-columns:1fr}
+      aside{order:2}
+    }
+
+    /* Tiny retro accent animation */
+    @keyframes neonPulse{
+      0%{filter:drop-shadow(0 0 0 rgba(102,252,241,0.15))}
+      50%{filter:drop-shadow(0 0 18px rgba(102,252,241,0.25))}
+      100%{filter:drop-shadow(0 0 0 rgba(102,252,241,0.15))}
+    }
+    .logo{animation:neonPulse 3.8s ease-in-out infinite}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">CC</div>
+        <div>
+          <h1>Curd & Crumb</h1>
+          <p class="lead">A retro-loving cheese blog — notes on wheels, rinds & recipes</p>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Reviews</a>
+        <a href="#">Recipes</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <div class="hero">
+          <div class="hero-inner">
+            <div class="hero-image">🧀</div>
+            <div>
+              <h2>Welcome to Curd & Crumb</h2>
+              <p>Every week we taste a new cheese, pair it with surprising companions, and share retro recipes — from grilled cheese remixes to vintage fondue. Dive in.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="posts">
+          <!-- Post 1 -->
+          <article class="post">
+            <div class="thumb">BRIE</div>
+            <div class="meta">
+              <div class="title">Brie: Soft, buttery, and oh-so-good</div>
+              <div class="excerpt">We taste-tested three Brie varieties and found the best oven-baked method to get molten gold center without losing the rind.</div>
+              <div class="tags"><span class="tag">review</span><span class="tag">soft cheese</span><span class="tag">pairing</span></div>
+            </div>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="post">
+            <div class="thumb">CHED</div>
+            <div class="meta">
+              <div class="title">A cheddar timeline: from farm to fridge</div>
+              <div class="excerpt">A quick history of cheddar and a retro grilled-cheese recipe that uses a secret ingredient from the 80s.</div>
+              <div class="tags"><span class="tag">history</span><span class="tag">cheddar</span></div>
+            </div>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="post">
+            <div class="thumb">FETA</div>
+            <div class="meta">
+              <div class="title">Salads that sing: feta & citrus</div>
+              <div class="excerpt">Bright, crumbly feta paired with citrus and retro vinaigrette — a salad that feels like synth-pop.</div>
+              <div class="tags"><span class="tag">recipe</span><span class="tag">salads</span></div>
+            </div>
+          </article>
+        </div>
+
+        <footer>
+          <p>Curd & Crumb · Retro cheese writing since 2025</p>
+        </footer>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3 style="font-family:'Press Start 2P',monospace;font-size:12px;margin-bottom:8px">Subscribe</h3>
+          <p class="small">Get a weekly cheese note — no spam, just good rind.</p>
+          <div class="subscribe" style="margin-top:10px">
+            <label class="small">Email</label>
+            <input type="email" placeholder="your@cheese.mail" />
+            <div style="margin-top:8px">
+              <a class="btn btn-primary" href="#">Join</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="card">
+          <h4 style="font-family:'Press Start 2P',monospace;font-size:11px;margin-bottom:8px">About the taster</h4>
+          <p class="small">Hi — I'm Nthabiseng, wheel-chaser & amateur affineur. I write about taste, texture, and tiny retro dinner parties.</p>
+          <p class="small" style="margin-top:8px">Follow: <span style="color:var(--accent)">@curdcrumb</span></p>
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>
 
