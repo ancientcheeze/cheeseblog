@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cheese Maze Game</title>
+
+  <meta name="description" content="Guide the mouse through the maze and grab all the cheese!" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #f6e28b; /* cheese yellow */
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #3a2400;
+      text-shadow: 1px 1px 2px #fff1b0;
+    }
+
+    #gameCanvas {
+      margin-top: 20px;
+      border: 5px solid #3a2400;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      background: #fff;
+    }
+
+    #instructions {
+      margin-top: 10px;
+      color: #3a2400;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🧀 Cheese Maze</h1>
+  <p id="instructions">Use arrow keys to move your mouse through the maze!</p>
+
+  <!-- Your game canvas -->
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+  <!-- Game scripts -->
+  <script src="maze.js"></script>
+  <script src="mouse.js"></script>
+  <script src="cheese.js"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>
